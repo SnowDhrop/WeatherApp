@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+// This is the GUI of the application. It displays data.
 public class WeatherAppGui extends JFrame {
     public WeatherAppGui() {
         super("Weather App");
@@ -41,6 +42,41 @@ public class WeatherAppGui extends JFrame {
         weatherConditionImage.setBounds(0, 125, 450, 217);
         add(weatherConditionImage);
 
+        // Temperature Text
+        JLabel temperatureText = new JLabel("10 °C");
+        temperatureText.setBounds(0, 350, 450, 54);
+        temperatureText.setFont(new Font("DIALOG", Font.BOLD, 48));
+        temperatureText.setHorizontalAlignment(SwingConstants.CENTER);
+        add(temperatureText);
+
+        // Weather condition description
+        JLabel weatherConditionDesc = new JLabel("Cloudy");
+        weatherConditionDesc.setBounds(0, 405, 450, 36);
+        weatherConditionDesc.setFont(new Font("Dialog", Font.PLAIN, 32));
+        weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        add(weatherConditionDesc);
+
+        // Humidity image
+        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity.png"));
+        humidityImage.setBounds(15, 500, 74, 66);
+        add(humidityImage);
+
+        // Humidity text
+        JLabel humidityText = new JLabel("<html><b>Humidity</b> 100%</html>");
+        humidityText.setBounds(90, 500, 85, 55);
+        humidityText.setFont(new Font("DIALOG", Font.PLAIN, 16));
+        add(humidityText);
+
+        // Windspeed image
+        JLabel windspeedImage = new JLabel(loadImage("src/assets/windspeed.png"));
+        windspeedImage.setBounds(220, 500, 74, 66);
+        add(windspeedImage);
+
+        // Windspeed text
+        JLabel windspeedText = new JLabel("<html><b>Windspeed</b> 15km/h</html>");
+        windspeedText.setBounds(310, 500, 85, 55);
+        windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
+        add(windspeedText);
     }
 
     // Used to create images in our gui components
