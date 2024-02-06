@@ -11,6 +11,7 @@ import java.io.*;
 // This is the GUI of the application. It displays data.
 public class WeatherAppGui extends JFrame {
     private JSONObject weatherData;
+
     public WeatherAppGui() {
         super("Weather App");
 
@@ -38,7 +39,7 @@ public class WeatherAppGui extends JFrame {
 
 
         // Weather Image
-        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/cloudy.png"));
+        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/clear.png"));
         weatherConditionImage.setBounds(0, 125, 450, 217);
         add(weatherConditionImage);
 
@@ -50,7 +51,7 @@ public class WeatherAppGui extends JFrame {
         add(temperatureText);
 
         // Weather condition description
-        JLabel weatherConditionDesc = new JLabel("Cloudy");
+        JLabel weatherConditionDesc = new JLabel("Clear");
         weatherConditionDesc.setBounds(0, 405, 450, 36);
         weatherConditionDesc.setFont(new Font("Dialog", Font.PLAIN, 32));
         weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -62,7 +63,7 @@ public class WeatherAppGui extends JFrame {
         add(humidityImage);
 
         // Humidity text
-        JLabel humidityText = new JLabel("<html><b>Humidity</b> 100%</html>");
+        JLabel humidityText = new JLabel("<html><b>Humidity</b> 0%</html>");
         humidityText.setBounds(90, 500, 85, 55);
         humidityText.setFont(new Font("DIALOG", Font.PLAIN, 16));
         add(humidityText);
@@ -73,8 +74,8 @@ public class WeatherAppGui extends JFrame {
         add(windspeedImage);
 
         // Windspeed text
-        JLabel windspeedText = new JLabel("<html><b>Windspeed</b> 15km/h</html>");
-        windspeedText.setBounds(310, 500, 85, 55);
+        JLabel windspeedText = new JLabel("<html><b>Windspeed</b><br>15 km/h</html>");
+        windspeedText.setBounds(310, 500, 150, 60);
         windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
         add(windspeedText);
 
@@ -100,14 +101,22 @@ public class WeatherAppGui extends JFrame {
 
                 // Update weather image
                 String weatherCondition = (String) weatherData.get("weather_condition");
+                weatherConditionImage.setIcon(loadImage("src/assets/" + weatherCondition + ".png"));
 
-                switch(weatherCondition) {
-                    case "Clear":
-                        
-                }
+                // Update fields
+                double temperature = (double) weatherData.get("temperature");
+                temperatureText.setText(temperature + "°C");
+
+                weatherConditionDesc.setText(weatherCondition.substring(0, 1).toUpperCase() + weatherCondition.substring(1));
+
+                long humidity = (long) weatherData.get("humidity");
+                humidityText.setText("<html><b>Humidity</b> " + humidity + "%</html>");
+
+                double windspeed = (double) weatherData.get("windspeed");
+                windspeedText.setText("<html><b>Windspeed</b><br>" + windspeed + " km/h</html>");
 
             }
-        })
+        });
         add(searchButton);
     }
 

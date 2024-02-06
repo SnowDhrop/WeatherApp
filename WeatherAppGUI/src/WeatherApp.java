@@ -59,25 +59,25 @@ public class WeatherApp {
 
                 // Get temperature
                 JSONArray temperatureData = (JSONArray) hourly.get("temperature_2m");
-                float temperature = (float) temperatureData.get(index);
+                double temperature = (double) temperatureData.get(index);
 
                 // Get weather code
-                JSONArray weatherCodeData = (JSONArray) hourly.get("weathercode");
+                JSONArray weatherCodeData = (JSONArray) hourly.get("weather_code");
                 String weatherCondition = convertWeatherCode((long) weatherCodeData.get(index));
 
                 // Get humidity
-                JSONArray relativeHumidity = (JSONArray) hourly.get("relativehumidity_2m");
+                JSONArray relativeHumidity = (JSONArray) hourly.get("relative_humidity_2m");
                 long humidity = (long) relativeHumidity.get(index);
 
                 // Get windspeed
-                JSONArray windSpeed = (JSONArray) hourly.get("windspeed_10m");
-                float windspeed = (float) windSpeed.get(index);
+                JSONArray windSpeed = (JSONArray) hourly.get("wind_speed_10m");
+                double windspeed = (double) windSpeed.get(index);
 
                 // Build the weather json data object that we are going to access in our frontend
                 JSONObject weatherData = new JSONObject();
                 weatherData.put("temperature", temperature);
                 weatherData.put("weather_condition", weatherCondition);
-                weatherData.put("relativeHumidity", humidity);
+                weatherData.put("humidity", humidity);
                 weatherData.put("windspeed", windspeed);
 
                 return weatherData;
@@ -190,15 +190,15 @@ public class WeatherApp {
         String weatherCondition = "";
 
         if (weatherCode == 0L) {
-            weatherCondition = "Clear";
+            weatherCondition = "clear";
         } else if (weatherCode <= 3L) {
-            weatherCondition = "Cloudy";
+            weatherCondition = "cloudy";
         } else if (weatherCode <= 67L) {
-            weatherCondition = "Rain";
+            weatherCondition = "rain";
         } else if (weatherCode <= 77L) {
-            weatherCondition = "Snow";
+            weatherCondition = "snow";
         } else {
-            weatherCondition = "Rain";
+            weatherCondition = "rain";
         }
 
         return weatherCondition;
