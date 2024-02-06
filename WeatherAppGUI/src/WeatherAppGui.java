@@ -1,11 +1,16 @@
+import org.json.simple.JSONObject;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 // This is the GUI of the application. It displays data.
 public class WeatherAppGui extends JFrame {
+    private JSONObject weatherData;
     public WeatherAppGui() {
         super("Weather App");
 
@@ -31,11 +36,6 @@ public class WeatherAppGui extends JFrame {
         searchTextField.setFont(new Font("Dialog", Font.PLAIN, 24));
         add(searchTextField);
 
-        // Search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png"));
-        searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchButton.setBounds(375, 13, 47, 45);
-        add(searchButton);
 
         // Weather Image
         JLabel weatherConditionImage = new JLabel(loadImage("src/assets/cloudy.png"));
@@ -77,6 +77,38 @@ public class WeatherAppGui extends JFrame {
         windspeedText.setBounds(310, 500, 85, 55);
         windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
         add(windspeedText);
+
+        // Search button
+        JButton searchButton = new JButton(loadImage("src/assets/search.png"));
+        searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        searchButton.setBounds(375, 13, 47, 45);
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Get location from user
+                String userInput = searchTextField.getText();
+
+                // Validate input - remove whitespace to ensure non-empty text
+                if (userInput.replaceAll("\\s", "").isEmpty()) {
+                    return;
+                }
+
+                // Retrieve weather data
+                weatherData = WeatherApp.getWeatherData(userInput);
+
+                // Update gui
+
+                // Update weather image
+                String weatherCondition = (String) weatherData.get("weather_condition");
+
+                switch(weatherCondition) {
+                    case "Clear":
+                        
+                }
+
+            }
+        })
+        add(searchButton);
     }
 
     // Used to create images in our gui components
