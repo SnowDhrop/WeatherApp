@@ -37,18 +37,7 @@ public class WeatherApp {
                 return null;
             } else {
                 // Store resulting json data
-                StringBuilder resultJson = new StringBuilder();
-                Scanner scanner = new Scanner(conn.getInputStream());
-
-                while (scanner.hasNext()) {
-                    resultJson.append(scanner.nextLine());
-                }
-
-                scanner.close();
-                conn.disconnect();
-
-                JSONParser parser = new JSONParser();
-                JSONObject resultsJsonObject = (JSONObject) parser.parse(String.valueOf(resultJson));
+                JSONObject resultsJsonObject = getJSONObject(conn);
 
                 JSONObject hourly = (JSONObject) resultsJsonObject.get("hourly");
 
@@ -90,7 +79,7 @@ public class WeatherApp {
     }
 
     // Retrieves geolocation coordinates for give location name
-    public static JSONArray getLocationData(String locationName) {
+    private static JSONArray getLocationData(String locationName) {
         // Replace any whitespace in location name  to + to adhere to API's request format
         locationName = locationName.replaceAll(" ", "+");
 
@@ -106,27 +95,7 @@ public class WeatherApp {
                 System.out.println("Error: Could not connect to API");
                 return null;
             } else {
-                // Store the API results
-                // Manipulate String
-                StringBuilder resultJson = new StringBuilder();
-
-                // Scanner read the JSON data that is returned from our API call
-                Scanner scanner = new Scanner(conn.getInputStream());
-
-                // Read and store datas into the stringBuilder
-                while (scanner.hasNext()) {
-                    resultJson.append(scanner.nextLine());
-                }
-
-                scanner.close();
-                conn.disconnect();
-
-                // Parse the JSON String into a JSON Object
-                JSONParser parser = new JSONParser();
-
-                // Convertis l'objet resultJson en une chaîne de caractères
-                // Puis l'analyse pour la transformer en JSONObject pour le manipuler plus facilement
-                JSONObject resultsJsonObject = (JSONObject) parser.parse(String.valueOf(resultJson));
+                JSONObject resultsJsonObject = getJSONObject(conn);
 
                 // Get the list of location data the API generated from the location name
                 JSONArray locationData = (JSONArray) resultsJsonObject.get("results");
@@ -137,6 +106,37 @@ public class WeatherApp {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    private static JSONObject getJSONObject(HttpURLConnection conn) {
+        try {
+            // Store the API results
+            // Manipulate String
+            StringBuilder resultJson = new StringBuilder();
+
+            // Scanner read the JSON data that is returned from our API call
+            Scanner scanner = new Scanner(conn.getInputStream());
+
+            // Read and store datas into the stringBuilder
+            while (scanner.hasNext()) {
+                resultJson.append(scanner.nextLine());
+            }
+
+            scanner.close();
+            conn.disconnect();
+
+            // Parse the JSON String into a JSON Object
+            JSONParser parser = new JSONParser();
+
+            // Convertis l'objet resultJson en une chaîne de caractères
+            // Puis l'analyse pour la transformer en JSONObject pour le manipuler plus facilement
+            JSONObject resultsJsonObject = (JSONObject) parser.parse(String.valueOf(resultJson));
+
+            return resultsJsonObject;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
