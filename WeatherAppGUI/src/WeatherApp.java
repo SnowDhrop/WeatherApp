@@ -33,11 +33,11 @@ public class WeatherApp {
             HttpURLConnection conn = fetchApiResponse(urlString);
 
             if (conn.getResponseCode() != 200) {
-                System.out.println("Error: Could not connect to API");
+                System.out.println("Error: Could not connect to API to get weather data");
                 return null;
             } else {
                 // Store resulting json data
-                JSONObject resultsJsonObject = getJSONObject(conn);
+                JSONObject resultsJsonObject = getJsonObject(conn);
 
                 JSONObject hourly = (JSONObject) resultsJsonObject.get("hourly");
 
@@ -92,10 +92,10 @@ public class WeatherApp {
             HttpURLConnection conn = fetchApiResponse(urlString);
 
             if (conn.getResponseCode() != 200) {
-                System.out.println("Error: Could not connect to API");
+                System.out.println("Error: Could not connect to API to get location");
                 return null;
             } else {
-                JSONObject resultsJsonObject = getJSONObject(conn);
+                JSONObject resultsJsonObject = getJsonObject(conn);
 
                 // Get the list of location data the API generated from the location name
                 JSONArray locationData = (JSONArray) resultsJsonObject.get("results");
@@ -109,7 +109,7 @@ public class WeatherApp {
         return null;
     }
 
-    private static JSONObject getJSONObject(HttpURLConnection conn) {
+    private static JSONObject getJsonObject(HttpURLConnection conn) {
         try {
             // Store the API results
             // Manipulate String
