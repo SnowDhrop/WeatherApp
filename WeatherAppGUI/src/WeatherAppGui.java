@@ -37,9 +37,7 @@ public class WeatherAppGui extends JFrame {
         searchTextField.setFont(new Font("Dialog", Font.PLAIN, 24));
         add(searchTextField);
 
-
-        // Weather Image
-        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/clear.png"));
+        JLabel weatherConditionImage = new JLabel(loadImage("/assets/clear.png"));
         weatherConditionImage.setBounds(0, 125, 450, 217);
         add(weatherConditionImage);
 
@@ -58,7 +56,7 @@ public class WeatherAppGui extends JFrame {
         add(weatherConditionDesc);
 
         // Humidity image
-        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity.png"));
+        JLabel humidityImage = new JLabel(loadImage("/assets/humidity.png"));
         humidityImage.setBounds(15, 500, 74, 66);
         add(humidityImage);
 
@@ -69,7 +67,7 @@ public class WeatherAppGui extends JFrame {
         add(humidityText);
 
         // Windspeed image
-        JLabel windspeedImage = new JLabel(loadImage("src/assets/windspeed.png"));
+        JLabel windspeedImage = new JLabel(loadImage("/assets/windspeed.png"));
         windspeedImage.setBounds(220, 500, 74, 66);
         add(windspeedImage);
 
@@ -80,7 +78,7 @@ public class WeatherAppGui extends JFrame {
         add(windspeedText);
 
         // Search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png"));
+        JButton searchButton = new JButton(loadImage("/assets/search.png"));
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         searchButton.setBounds(375, 13, 47, 45);
         searchButton.addActionListener(new ActionListener() {
@@ -101,7 +99,7 @@ public class WeatherAppGui extends JFrame {
 
                 // Update weather image
                 String weatherCondition = (String) weatherData.get("weather_condition");
-                weatherConditionImage.setIcon(loadImage("src/assets/" + weatherCondition + ".png"));
+                weatherConditionImage.setIcon(loadImage("/assets/" + weatherCondition + ".png"));
 
                 // Update fields
                 double temperature = (double) weatherData.get("temperature");
@@ -123,7 +121,7 @@ public class WeatherAppGui extends JFrame {
     // Used to create images in our gui components
     private ImageIcon loadImage(String resourcePath) {
         try {
-            BufferedImage image = ImageIO.read(new File(resourcePath));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream(resourcePath));
 
             return new ImageIcon(image);
         } catch (IOException e) {
